@@ -405,9 +405,8 @@ project(":tests"){
             exceptionFormat = 'full'
             showStandardStreams = true
         }
-    }
 
-     reports {
+        reports {
             html {
                 destination = file("$buildDir/reports/tests/test")
             }
@@ -415,6 +414,9 @@ project(":tests"){
                 destination = file("$buildDir/test-results/test")
             }
         }
+    }
+
+     
 }
 
 project(":tools"){
@@ -490,3 +492,5 @@ task resolveDependencies{
         }
     }
 }
+
+apply from: 'test.gradle'
