@@ -44,7 +44,16 @@ public class CrashHandler{
         try{
             Core.settings.getDataDirectory().child("crashes").child("crash_" + System.currentTimeMillis() + ".txt")
             .writeString(createReport(exception));
-        }catch(Throwable ignored){
+        }catch(Throwable e){
+            // log the failure to save the crash report
+            try {
+                Log.err("Failed to save crash report: " + Strings.getStackTrace(e));
+                // attempt to write to standard error as a last resort
+                System.err.println("CRASH REPORT SAVING FAILED: " + Strings.getStackTrace(e));
+                System.err.println("ORIGINAL EXCEPTION: " + Strings.getStackTrace(exception));
+            } catch(Throwable ignored) {
+                // nothing more we can do
+            }
         }
     }
 
