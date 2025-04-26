@@ -1,1 +1,37 @@
 sourceSets.test.resources.srcDirs = ["src/test/resources"]
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.10" 
+}
+
+jacocoTestReport {
+    dependsOn test // Ensure tests are run before generating the report
+    reports {
+        html {
+            required = true
+            destination file("$buildDir/reports/jacoco/html")
+        }
+        xml {
+            required = true
+            destination file("$buildDir/reports/jacoco/xml")
+        }
+    }
+
+    classDirectories.setFrom(
+        files("${project.rootDir}/core/build/classes/java/main")
+    )
+
+    sourceDirectories.setFrom(
+        files("${project.rootDir}/core/src")
+    )
+
+    executionData.setFrom(
+        fileTree(dir: "$buildDir", includes: [
+            "jacoco/test.exec", // Gradle < 7.x
+            "jacoco/test.exec", // Gradle 8.x
+            "jacoco/testUnitTest.exec"
+        ])
+    )
+}
