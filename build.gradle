@@ -193,7 +193,7 @@ allprojects{
 
     tasks.withType(JavaCompile){
         targetCompatibility = 8
-        sourceCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
         options.encoding = "UTF-8"
         options.compilerArgs += ["-Xlint:deprecation"]
         dependsOn clearCache
@@ -228,7 +228,7 @@ configure(subprojects - project(":annotations")){
     tasks.withType(Javadoc){
         options{
             addStringOption('Xdoclint:none', '-quiet')
-            addStringOption('-release', '17')
+            addStringOption('-release', '21')
             encoding('UTF-8')
         }
     }
@@ -262,7 +262,7 @@ project(":core"){
 
     kapt{
         javacOptions{
-            option("-source", "17")
+            option("-source", "21")
             option("-target", "1.8")
         }
     }
