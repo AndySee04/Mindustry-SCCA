@@ -30,8 +30,9 @@ jobs:
                 ~/.gradle/caches
                 ~/.gradle/wrapper
             key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }} #calculates the hash and if changes, cache will refresh auto 
-            restore-keys: | 
-                ${{ runner.os }}-gradle #if key not found, fallback to general
+            restore-keys: |
+                ${{ runner.os }}-gradle 
+              #if key not found, fallback to general
 
       #step4: build project
       - name: Build project with Gradle
