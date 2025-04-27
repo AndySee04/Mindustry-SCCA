@@ -2,7 +2,7 @@ name: Test Mindustry Client
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "flow/github-workflow-setup"]
   pull_request:
     branches: [ "master" ]
 
@@ -43,7 +43,7 @@ jobs:
         run: gradle jacocoTestReport
 
       - name: Upload Code Coverage Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
           path: build/reports/jacoco/test/html/**
