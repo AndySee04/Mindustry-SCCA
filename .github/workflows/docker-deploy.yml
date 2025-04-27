@@ -10,7 +10,9 @@
 name: Publish Docker images
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
   release:
     types: [published]
 
@@ -48,6 +50,8 @@ jobs:
           tags: |
             type=semver,pattern={{version}},suffix=-client
             type=raw,value=latest-client
+            type=sha,format=short,suffix=-client
+            type=ref,event=branch,prefix=branch-,suffix=-client
 
       - name: Build and push client image
         id: push-client
@@ -75,6 +79,8 @@ jobs:
           tags: |
             type=semver,pattern={{version}},suffix=-server
             type=raw,value=latest-server
+            type=sha,format=short,suffix=-server
+            type=ref,event=branch,prefix=branch-,suffix=-server
 
       - name: Build and push server image
         id: push-server
