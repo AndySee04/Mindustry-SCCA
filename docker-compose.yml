@@ -16,14 +16,18 @@ services:
 
   mindustry-client:
     build: .
+    # WSLg configuration
     environment:
-      - DISPLAY=host.docker.internal:0.0
+      - DISPLAY=${DISPLAY}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
+      - PULSE_SERVER=${PULSE_SERVER}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      - HOME=/home/mindustry
     volumes:
-      - client-data:/root/.local/share/Mindustry
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - /mnt/wslg:/mnt/wslg
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix
+      - ~/.mindustry_data:/home/mindustry
 
 volumes:
   server-data:
   server-maps:
-  client-data:
