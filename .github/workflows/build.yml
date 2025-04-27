@@ -1,0 +1,40 @@
+name: Build Mindustry Client (Game)
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+	#step1: checkout repo
+      - name: Checkout current master repository
+        uses: actions/checkout@v4
+
+	#step2: setup java
+      - name: Set up Java environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+	
+	#step3: cache gradle dependencies, so no need redownload dependencies every run, faster build
+      - name:  Cache gradle packages  
+        uses:  action/cache@v3
+        with:
+            path: |
+                ~/.gradle/caches
+                ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }} #calculates the hash and if changes, cache will refresh auto 
+            restore-keys: | 
+                ${{ runner.os }}-gradle #if key not found, fallback to general
+
+    #step4: build project
+      - name: Build project with Gradle
+        run: ./gradlew build
+
+
