@@ -35,8 +35,8 @@ jobs:
 
     #step4: build project
       - name: Build project with Gradle
-        run: ./gradlew build
-
+        run: .\gradlew desktop:dist
+        
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
