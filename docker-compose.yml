@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   mindustry-server:
@@ -16,17 +16,15 @@ services:
 
   mindustry-client:
     build: .
-    # WSLg configuration
+    image: mindustry-client
+    stdin_open: true
+    tty: true
     environment:
-      - DISPLAY=${DISPLAY}
-      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
-      - PULSE_SERVER=${PULSE_SERVER}
-      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      - DISPLAY=:0
       - HOME=/home/mindustry
     volumes:
-      - /mnt/wslg:/mnt/wslg
-      - /mnt/wslg/.X11-unix:/tmp/.X11-unix
       - ~/.mindustry_data:/home/mindustry
+    network_mode: "host"
 
 volumes:
   server-data:
