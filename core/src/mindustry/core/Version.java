@@ -74,7 +74,7 @@ public class Version{
     /** get menu version without colors */
     public static String combined(){
         if(build == -1){
-            return "custom build";
+            return "custom build For SCC Assignment 2";
         }
         return (type.equals("official") ? modifier : type) + " build " + build + (revision == 0 ? "" : "." + revision) + (commitHash.equals("unknown") ? "" : " (" + commitHash + ")");
     }
