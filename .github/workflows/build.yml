@@ -11,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-	#step1: checkout repo
+      #step1: checkout repo
       - name: Checkout current master repository
         uses: actions/checkout@v4
 
-	#step2: setup java
+      #step2: setup java
       - name: Set up Java environment
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-	
-	#step3: cache gradle dependencies, so no need redownload dependencies every run, faster build
+      
+      #step3: cache gradle dependencies, so no need redownload dependencies every run, faster build
       - name:  Cache gradle packages  
         uses:  actions/cache@v4
         with:
@@ -33,7 +33,7 @@ jobs:
             restore-keys: | 
                 ${{ runner.os }}-gradle #if key not found, fallback to general
 
-    #step4: build project
+      #step4: build project
       - name: Build project with Gradle
         run: .\gradlew desktop:dist
 
