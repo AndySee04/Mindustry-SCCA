@@ -2,7 +2,7 @@ name: Build Mindustry Client (Game)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "flow/github-workflow-setup" ]
   pull_request:
     branches: [ "master" ]
 
@@ -36,7 +36,7 @@ jobs:
     #step4: build project
       - name: Build project with Gradle
         run: .\gradlew desktop:dist
-        
+
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
