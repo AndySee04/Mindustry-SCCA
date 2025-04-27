@@ -28,6 +28,7 @@ public class Version{
         if(!enabled) return;
 
         System.out.println("Mindustry Version class loaded.");
+        
         Fi file = OS.isAndroid || OS.isIos ? Core.files.internal("version.properties") : new Fi("version.properties", FileType.internal);
 
         ObjectMap<String, String> map = new ObjectMap<>();
