@@ -1,0 +1,9 @@
+apply plugin: "jacoco"
+
+tasks.register('generateTestReports') {
+    group = 'verification'
+    description = 'Cleans, runs tests, and generates coverage reports.'
+
+    // Ensuring the root clean task is correctly referenced
+    dependsOn clean, ':tests:test', ':tests:jacocoTestReport'
+}

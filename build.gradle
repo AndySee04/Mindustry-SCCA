@@ -405,7 +405,18 @@ project(":tests"){
             exceptionFormat = 'full'
             showStandardStreams = true
         }
+
+        reports {
+            html {
+                destination = file("$buildDir/reports/tests/test")
+            }
+            junitXml {
+                destination = file("$buildDir/test-results/test")
+            }
+        }
     }
+
+     
 }
 
 project(":tools"){
@@ -481,3 +492,5 @@ task resolveDependencies{
         }
     }
 }
+
+apply from: 'test.gradle'
