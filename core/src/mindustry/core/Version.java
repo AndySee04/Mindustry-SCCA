@@ -1,11 +1,12 @@
 package mindustry.core;
 
-import arc.*;
-import arc.Files.*;
-import arc.files.*;
-import arc.struct.*;
-import arc.util.*;
-import arc.util.io.*;
+import arc.Core;
+import arc.Files.FileType;
+import arc.files.Fi;
+import arc.struct.ObjectMap;
+import arc.util.OS;
+import arc.util.Strings;
+import arc.util.io.PropertiesUtils;
 
 public class Version{
     /** Build type. 'official' for official releases; 'custom' or 'bleeding edge' are also used. */
@@ -26,6 +27,8 @@ public class Version{
     public static void init(){
         if(!enabled) return;
 
+        System.out.println("Mindustry Version class loaded.");
+        
         Fi file = OS.isAndroid || OS.isIos ? Core.files.internal("version.properties") : new Fi("version.properties", FileType.internal);
 
         ObjectMap<String, String> map = new ObjectMap<>();
