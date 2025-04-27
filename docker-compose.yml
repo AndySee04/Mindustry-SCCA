@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mindustry-server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    ports:
+      - "6567:6567/tcp"
+      - "6567:6567/udp"
+    volumes:
+      - server-data:/app/config
+      - server-maps:/app/maps
+    restart: unless-stopped
+    command: "host"
+
+  mindustry-client:
+    build: .
+    # WSLg configuration
+    environment:
+      - DISPLAY=${DISPLAY}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
+      - PULSE_SERVER=${PULSE_SERVER}
+      - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
+      - HOME=/home/mindustry
+    volumes:
+      - /mnt/wslg:/mnt/wslg
+      - /mnt/wslg/.X11-unix:/tmp/.X11-unix
+      - ~/.mindustry_data:/home/mindustry
+
+volumes:
+  server-data:
+  server-maps:
