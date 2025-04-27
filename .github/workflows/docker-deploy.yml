@@ -35,6 +35,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       # CLIENT IMAGE
       - name: Extract metadata for client
         id: meta-client
