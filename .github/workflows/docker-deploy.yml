@@ -46,6 +46,7 @@ jobs:
           images: amiwhatiam/mindustry
           tags: |
             type=semver,pattern={{version}},suffix=-client
+            type=ref,event=branch,prefix=branch-,suffix=-client
 
       - name: Build and push client image
         id: push-client
@@ -72,6 +73,7 @@ jobs:
           images: amiwhatiam/mindustry
           tags: |
             type=semver,pattern={{version}},suffix=-server
+            type=ref,event=branch,prefix=branch-,suffix=-server
 
       - name: Build and push server image
         id: push-server
