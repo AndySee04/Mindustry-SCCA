@@ -25,7 +25,7 @@ buildscript{
     }
 }
 
-plugins{
+plugins {
     id "org.jetbrains.kotlin.jvm" version "2.1.10"
     id "org.jetbrains.kotlin.kapt" version "2.1.10"
 }
@@ -493,7 +493,7 @@ task resolveDependencies{
     }
 }
 
-task runAllWithScan {
+task runAll {
     description = 'Runs desktop:dist and server:dist'
     
     doLast {
