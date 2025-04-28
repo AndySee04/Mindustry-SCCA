@@ -32,6 +32,9 @@ RUN ./gradlew desktop:dist
 
 # --- Added Entrypoint Script ---
 COPY entrypoint.sh /entrypoint.sh
+# Ensure line endings are correct *inside* the container
+RUN dos2unix /entrypoint.sh
+# Make it executable
 RUN chmod +x /entrypoint.sh
 
 # Set the entrypoint to the script
