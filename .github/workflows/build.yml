@@ -46,9 +46,11 @@ jobs:
           path: desktop/build/libs/**
           if-no-files-found: warn
       
+      #step6: build server
       - name: Build server with Gradle
         run: ./gradlew server:dist
 
+      #step7: upload server artifacts
       - name: Upload Server Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -56,12 +58,13 @@ jobs:
           path: server/build/libs/**
           if-no-files-found: warn
 
-      #generate build report, template inside the other script
+      #step8: generate build report
       - name: Generate Full Build Report
         run: |
             chmod +x .github/scripts/generate-build-report.sh
             .github/scripts/generate-build-report.sh
 
+      #step9: upload build report
       - name: Upload Build Report
         uses: actions/upload-artifact@v4
         with:
