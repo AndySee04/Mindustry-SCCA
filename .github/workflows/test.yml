@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: test-summary
-            path: reports/test-summary.md
+            path: test-summary.md
         
       - name: Generate code coverage report
         run: gradle jacocoTestReport
