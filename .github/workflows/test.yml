@@ -43,16 +43,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Code Coverage Report
-          path: tests/reports/jacoco/html/index.html
-
-      - name: Generate Test Summary
-        run: |
-            chmod +x .github/scripts/generate-test-summary.sh
-            .github/scripts/generate-test-summary.sh
-        
-      - name: Upload Test Summary
-        uses: actions/upload-artifact@v4
-        with:
-            name: test-summary
-            path: test-summary.md
+          path: tests/build/reports/jacoco/html/index.html
           
