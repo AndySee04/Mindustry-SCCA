@@ -1,4 +1,4 @@
-name: Build Mindustry Client (Game)
+name: Build Mindustry Client and Server
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       
       #step3: cache gradle dependencies, so no need redownload dependencies every run, faster build
       - name:  Cache gradle packages  
