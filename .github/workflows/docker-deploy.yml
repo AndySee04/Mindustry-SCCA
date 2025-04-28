@@ -88,3 +88,15 @@ jobs:
           subject-name: index.docker.io/amiwhatiam/mindustry
           subject-digest: ${{ steps.push-server.outputs.digest }}
           push-to-registry: true
+      
+      - name: Generate Deployment Report
+        run: |
+          chmod +x .github/scripts/generate-deployment-report.sh
+          .github/scripts/generate-deployment-report.sh
+
+      - name: Upload Deployment Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-report
+          path: reports/deployment-report.md
+          if-no-files-found: warn
