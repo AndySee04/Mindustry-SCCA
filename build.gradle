@@ -493,4 +493,35 @@ task resolveDependencies{
     }
 }
 
+task runAllWithScan {
+    description = 'Runs desktop:dist and server:dist'
+    
+    doLast {
+        // Determine the appropriate Gradle wrapper executable based on OS
+        def isWindows = System.getProperty('os.name').toLowerCase().contains('windows')
+        def gradleCommand = isWindows ? 'gradlew.bat' : './gradlew'
+        
+        // Execute the commands in sequence
+        project.exec {
+            workingDir = project.projectDir
+            if (isWindows) {
+                commandLine 'cmd', '/c', gradleCommand, 'desktop:dist'
+            } else {
+                commandLine 'sh', '-c', gradleCommand, 'desktop:dist'
+            }
+        }
+        
+        project.exec {
+            workingDir = project.projectDir
+            if (isWindows) {
+                commandLine 'cmd', '/c', gradleCommand, 'server:dist'
+            } else {
+                commandLine 'sh', '-c', gradleCommand, 'server:dist'
+            }
+        }
+        
+        println "All tasks have been executed successfully!"
+    }
+}
+
 apply from: 'test.gradle'
