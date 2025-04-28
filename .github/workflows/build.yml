@@ -38,8 +38,33 @@ jobs:
       - name: Build project with Gradle
         run: ./gradlew desktop:dist
 
+      #step5: upload build artifacts for debugging
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: mindustry-desktop-jar-build-artifact-from-build-yml
           path: desktop/build/libs/**
+          if-no-files-found: warn
+      
+      - name: Build server with Gradle
+        run: ./gradlew server:dist
+
+      - name: Upload Server Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mindustry-server-jar-build-artifact-from-build-yml
+          path: server/build/libs/**
+          if-no-files-found: warn
+
+      #generate build report, template inside the other script
+      - name: Generate Full Build Report
+        run: |
+            chmod +x .github/scripts/generate-build-report.sh
+            .github/scripts/generate-build-report.sh
+
+      - name: Upload Build Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-report
+          path: reports/build-report.md
+          if-no-files-found: warn
