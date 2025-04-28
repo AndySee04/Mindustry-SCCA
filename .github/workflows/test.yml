@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Code Coverage Report
-          path: build/reports/jacoco/html/index.html
+          path: tests/reports/jacoco/html/index.html
 
       - name: Generate Test Summary
         run: |
