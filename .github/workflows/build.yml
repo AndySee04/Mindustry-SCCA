@@ -2,7 +2,7 @@ name: Build Mindustry Client and Server
 
 on:
   push:
-    branches: [ "master", "flow/github-workflow-setup" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
