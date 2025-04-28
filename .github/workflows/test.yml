@@ -1,0 +1,51 @@
+name: Test Mindustry 
+
+on:
+  push:
+    branches: [ "master", "flow/github-workflow-setup"]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current master repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21' 
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle
+
+      - name: Run Gradle tests
+        run: ./gradlew test
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Reports
+          path: build/reports/tests/**
+
+      - name: Generate Test Summary
+        run: |
+            chmod +x .github/scripts/generate-test-summary.sh
+            .github/scripts/generate-test-summary.sh
+        
+      - name: Upload Test Summary
+        uses: actions/upload-artifact@v4
+        with:
+            name: test-summary
+            path: test-summary.md

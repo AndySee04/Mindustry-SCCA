@@ -1,0 +1,70 @@
+name: Build Mindustry Client and Server
+
+on:
+  push:
+    branches: [ "master", "flow/github-workflow-setup" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      #step1: checkout repo
+      - name: Checkout current master repository
+        uses: actions/checkout@v4
+
+      #step2: setup java
+      - name: Set up Java environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      
+      #step3: cache gradle dependencies, so no need redownload dependencies every run, faster build
+      - name:  Cache gradle packages  
+        uses:  actions/cache@v4
+        with:
+            path: |
+                ~/.gradle/caches
+                ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }} #calculates the hash and if changes, cache will refresh auto 
+            restore-keys: |
+                ${{ runner.os }}-gradle 
+              #if key not found, fallback to general
+
+      #step4: build project
+      - name: Build project with Gradle
+        run: ./gradlew desktop:dist
+
+      #step5: upload build artifacts for debugging
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mindustry-desktop-jar-build-artifact-from-build-yml
+          path: desktop/build/libs/**
+          if-no-files-found: warn
+      
+      - name: Build server with Gradle
+        run: ./gradlew server:dist
+
+      - name: Upload Server Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mindustry-server-jar-build-artifact-from-build-yml
+          path: server/build/libs/**
+          if-no-files-found: warn
+
+      #generate build report, template inside the other script
+      - name: Generate Full Build Report
+        run: |
+            chmod +x .github/scripts/generate-build-report.sh
+            .github/scripts/generate-build-report.sh
+
+      - name: Upload Build Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-report
+          path: reports/build-report.md
+          if-no-files-found: warn
